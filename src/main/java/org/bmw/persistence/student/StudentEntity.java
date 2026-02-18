@@ -1,4 +1,4 @@
-package org.bmw.persistence;
+package org.bmw.persistence.student;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
@@ -6,10 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bmw.domain.Student;
+import org.bmw.domain.University;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ApplicationScoped
 @Entity
@@ -17,16 +16,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "university")
-public class UniversityEntity{
-
+@Table(name = "student")
+public class StudentEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String location;
-    private List<Student> students;
+    private String firstName;
+    private String lastName;
+    private String cnp;
+    private String email;
+    private University university;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }
