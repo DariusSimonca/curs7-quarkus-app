@@ -7,6 +7,6 @@ import java.util.List;
 public interface Universities {
 
     University create(University university);
-    List<University> findByName(String name);
+    University findByName(String name);
     List<University> findAllUniversities();
 }

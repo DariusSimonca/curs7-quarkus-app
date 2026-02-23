@@ -10,11 +10,8 @@ import jakarta.ws.rs.core.Response;
 import org.bmw.domain.Student;
 import org.bmw.domain.University;
 import org.bmw.domaininteraction.UniversityService;
-import org.bmw.persistence.university.UniversityRepository;
 
 import java.util.List;
-
-import static jakarta.ws.rs.core.Response.status;
 
 @Transactional
 @Path("/api/university")
@@ -36,6 +33,12 @@ public class UniversityController {
     @GET
     public List<University> getAllUniversities(){
         return universityService.findAllUniversities();
+    }
+
+    @Path("/findByName")
+    @GET
+    public University findByName(@QueryParam("name") String name){
+        return universityService.findByName(name);
     }
 
     public record CreateUniversityRequest(

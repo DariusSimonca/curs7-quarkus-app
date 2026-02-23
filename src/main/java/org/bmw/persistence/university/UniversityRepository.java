@@ -1,6 +1,8 @@
 package org.bmw.persistence.university;
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bmw.domain.University;
 import org.bmw.domaininteraction.Universities;
@@ -29,8 +31,9 @@ public class UniversityRepository implements PanacheRepository<UniversityEntity>
     }
 
     @Override
-    public List<University> findByName(String name) {
-        return List.of();
+    public University findByName(String name) {
+        UniversityEntity entity = find("name",name).firstResult();
+        return mapper.toDomain(entity);
     }
 
     @Override

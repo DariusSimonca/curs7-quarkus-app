@@ -24,4 +24,8 @@ public class UniversityService {
         return universities.findAllUniversities();
     }
 
+    public University findByName(String name){
+        return universities.findByName(name);
+    }
+
 }
