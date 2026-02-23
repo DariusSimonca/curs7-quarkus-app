@@ -43,4 +43,6 @@ public class UniversityRepository implements PanacheRepository<UniversityEntity>
                 .map(mapper::toDomain)
                 .toList();
     }
+
+
 }

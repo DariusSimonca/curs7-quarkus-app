@@ -2,6 +2,7 @@ package org.bmw.persistence.student;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.NotFoundException;
 import org.bmw.domain.Student;
 import org.bmw.domaininteraction.Students;
 import org.bmw.persistence.mapper.StudentMapper;
@@ -41,5 +42,16 @@ public class StudentRepository implements PanacheRepository<StudentEntity>, Stud
         return entities.stream()
                 .map(mapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public void deleteStudent(String cnp) {
+       StudentEntity entity = find("cnp",cnp).firstResult();
+
+       if(entity == null){
+           throw new NotFoundException("Student not found !");
+       }
+
+       delete(entity);
     }
 }

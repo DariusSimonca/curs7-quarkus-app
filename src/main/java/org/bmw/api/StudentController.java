@@ -44,6 +44,13 @@ public class StudentController {
         return studentService.findAllStudents();
     }
 
+    @Path("/delete")
+    @DELETE
+    public Response deleteStudent(@QueryParam("cnp") String cnp){
+        studentService.deleteStudent(cnp);
+        return Response.status(Response.Status.OK).build();
+    }
+
     public record CreateStudentRequest(
             @NotBlank(message = "FirstName cannot be blank")
             String firstName,
@@ -61,6 +68,7 @@ public class StudentController {
 
             University university
     ) {}
+
 
 
 }

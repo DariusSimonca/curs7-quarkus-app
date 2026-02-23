@@ -1,6 +1,7 @@
 package org.bmw.domaininteraction;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.core.Response;
 import org.bmw.domain.Student;
 import org.bmw.domain.University;
 
@@ -27,5 +28,9 @@ public class StudentService {
 
     public List<Student> findAllStudents(){
         return students.findAllStudents();
+    }
+
+    public void deleteStudent(String cnp){
+        students.deleteStudent(cnp);
     }
 }
