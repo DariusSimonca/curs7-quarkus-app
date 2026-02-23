@@ -22,4 +22,20 @@ public class University {
                 .students(students)
                 .build();
     }
+
+    public static University createUniversity(String name, String location, List<Student> students){
+        University university = University.builder()
+                .name(name)
+                .location(location)
+                .students(students)
+                .build();
+        university.validateBusinessRules();
+        return university;
+    }
+
+    private void validateBusinessRules(){
+        if (name == null || location == null) {
+            throw new IllegalStateException("University must have a name and a location !");
+        }
+    }
 }
