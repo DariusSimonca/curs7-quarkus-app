@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bmw.domain.University;
+import org.bmw.persistence.university.UniversityEntity;
 
 import java.time.LocalDateTime;
 
@@ -24,9 +25,17 @@ public class StudentEntity{
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String cnp;
+
+    @Column(unique = true)
     private String email;
-    private University university;
+
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private UniversityEntity university;
+
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }

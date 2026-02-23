@@ -25,4 +25,22 @@ public class Student {
                 .university(university)
                 .build();
     }
+
+    public static Student createStudent(String firstName, String lastName, String cnp, String email, University university) {
+        Student student = Student.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .cnp(cnp)
+                .university(university)
+                .build();
+        student.validateBusinessRules();
+        return student;
+    }
+
+    private void validateBusinessRules() {
+        if (firstName == null || lastName == null || cnp == null || email == null) {
+            throw new IllegalStateException("Student must have a firstname,lastname,cnp and email !");
+        }
+    }
 }
