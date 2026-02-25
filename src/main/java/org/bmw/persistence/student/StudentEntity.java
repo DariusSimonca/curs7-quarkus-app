@@ -37,4 +37,12 @@ public class StudentEntity {
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+    public StudentEntity(Long id, String firstName, String lastName, String cnp, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cnp = cnp;
+        this.email = email;
+    }
 }

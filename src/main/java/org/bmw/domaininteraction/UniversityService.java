@@ -14,7 +14,7 @@ public class UniversityService {
         this.universities = universities;
     }
 
-    public Long create(String name, String location, List<Student> students){
+    public Long create(String name, String location, List<University.StudentInner> students){
         University university = University.createUniversity(name,location,students);
         University created = universities.create(university);
         return created.getId();

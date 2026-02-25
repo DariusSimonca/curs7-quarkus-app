@@ -38,4 +38,12 @@ public class UniversityEntity{
     public UniversityEntity(Long id) {
         this.id = id;
     }
+
+    public void addStudent(StudentEntity entity){
+        students.add(entity);
+    }
+
+    public void deleteStudent(StudentEntity entity){
+        students.remove(entity);
+    }
 }

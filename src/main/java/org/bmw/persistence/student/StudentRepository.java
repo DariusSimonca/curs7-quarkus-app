@@ -6,6 +6,8 @@ import jakarta.ws.rs.NotFoundException;
 import org.bmw.domain.Student;
 import org.bmw.domaininteraction.Students;
 import org.bmw.persistence.mapper.StudentMapper;
+import org.bmw.persistence.university.UniversityEntity;
+import org.bmw.persistence.university.UniversityRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.List;
 public class StudentRepository implements PanacheRepository<StudentEntity>, Students {
 
     private final StudentMapper mapper;
+    private final UniversityRepository universityRepository;
 
-    public StudentRepository(StudentMapper mapper) {
+    public StudentRepository(StudentMapper mapper, UniversityRepository universityRepository) {
         this.mapper = mapper;
+        this.universityRepository = universityRepository;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class StudentRepository implements PanacheRepository<StudentEntity>, Stud
     }
 
     @Override
-    public List<Student> findAllStudents(){
+    public List<Student> findAllStudents() {
         List<StudentEntity> entities = listAll();
         return entities.stream()
                 .map(mapper::toDomain)
@@ -46,12 +50,37 @@ public class StudentRepository implements PanacheRepository<StudentEntity>, Stud
 
     @Override
     public void deleteStudent(String cnp) {
-       StudentEntity entity = find("cnp",cnp).firstResult();
+        StudentEntity entity = find("cnp", cnp).firstResult();
 
-       if(entity == null){
-           throw new NotFoundException("Student not found !");
-       }
+        if (entity == null) {
+            throw new NotFoundException("Student not found !");
+        }
 
-       delete(entity);
+        UniversityEntity universityEntity = universityRepository.findById(entity.getUniversity().getId());
+        if (universityEntity != null){
+            universityEntity.deleteStudent(entity);
+        }
+
+        entity.setUniversity(null);
+
+        delete(entity);
+    }
+
+    @Override
+    public void assignStudentToUniversity(String cnp, String universityName) {
+        StudentEntity entity = find("cnp", cnp).firstResult();
+
+        if (entity == null) {
+            throw new NotFoundException("Student not found !");
+        }
+
+        UniversityEntity universityEntity = universityRepository.find("name", universityName).firstResult();
+
+        if (universityEntity == null) {
+            throw new NotFoundException("University not found !");
+        }
+
+        entity.setUniversity(universityEntity);
+        universityEntity.addStudent(entity);
     }
 }

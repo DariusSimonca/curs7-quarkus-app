@@ -2,6 +2,7 @@ package org.bmw.persistence.mapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bmw.domain.Student;
+import org.bmw.domain.University;
 import org.bmw.persistence.student.StudentEntity;
 import org.bmw.persistence.university.UniversityEntity;
 
@@ -24,7 +25,7 @@ public class StudentMapperImplementation implements StudentMapper {
                 entity.getLastName(),
                 entity.getCnp(),
                 entity.getEmail(),
-                universityMapper.toDomain(entity.getUniversity())
+                universityMapper.toInner(entity.getUniversity())
         );
     }
 
@@ -55,4 +56,20 @@ public class StudentMapperImplementation implements StudentMapper {
                 LocalDateTime.now()
         );
     }
+
+    @Override
+    public University.StudentInner toInner(StudentEntity student) {
+        return new University.StudentInner(student.getId(), student.getFirstName(),student.getLastName(),student.getCnp(),student.getEmail());
+    }
+
+    @Override
+    public StudentEntity fromInnerToEntity(University.StudentInner student) {
+        return new StudentEntity(student.getId(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getCnp(),
+                student.getEmail());
+    }
+
+
 }

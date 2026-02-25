@@ -1,6 +1,7 @@
 package org.bmw.persistence.mapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bmw.domain.Student;
 import org.bmw.domain.University;
 import org.bmw.persistence.university.UniversityEntity;
 
@@ -27,7 +28,7 @@ public class UniversityMapperImplementation implements UniversityMapper {
                 entity.getName(),
                 entity.getLocation(),
                 entity.getStudents().stream()
-                        .map(studentMapper::toDomain)
+                        .map(studentMapper::toInner)
                         .toList()
         );
     }
@@ -42,10 +43,18 @@ public class UniversityMapperImplementation implements UniversityMapper {
                 university.getName(),
                 university.getLocation(),
                 university.getStudents() != null
-                        ? university.getStudents().stream().map(studentMapper::toEntity).toList()
+                        ? university.getStudents().stream().map(studentMapper::fromInnerToEntity).toList()
                         : List.of(),
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+    }
+
+    @Override
+    public Student.UniversityInner toInner(UniversityEntity university) {
+        if (university == null) {
+            return null;
+        }
+        return new Student.UniversityInner(university.getId(), university.getName(), university.getLocation());
     }
 }

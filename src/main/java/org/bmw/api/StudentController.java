@@ -10,7 +10,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.bmw.domain.Student;
-import org.bmw.domain.University;
 import org.bmw.domaininteraction.StudentService;
 
 import java.util.List;
@@ -51,6 +50,13 @@ public class StudentController {
         return Response.status(Response.Status.OK).build();
     }
 
+    @Path("/assignToUniversity")
+    @PUT
+    public Response assignStudentToUniversity(@Valid AssignStudentToUniversityRequest request){
+        studentService.assignStudentToUniversity(request.cnp(), request.universityName());
+        return Response.noContent().build();
+    }
+
     public record CreateStudentRequest(
             @NotBlank(message = "FirstName cannot be blank")
             String firstName,
@@ -66,8 +72,16 @@ public class StudentController {
             @NotBlank(message = "Email cannot be blank")
             String email,
 
-            University university
+            Student.UniversityInner university
     ) {}
+
+    public record AssignStudentToUniversityRequest(
+            @NotBlank(message = "CNP cannot be blank !")
+            String cnp,
+
+      @NotBlank(message = "University name cannot be blank !")
+      String universityName
+    ){}
 
 
 

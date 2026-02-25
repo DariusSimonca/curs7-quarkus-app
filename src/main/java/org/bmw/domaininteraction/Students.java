@@ -9,4 +9,5 @@ public interface Students {
     List<Student> findByFirstName(String firstName);
     List<Student> findAllStudents();
     void deleteStudent(String cnp);
+    void assignStudentToUniversity(String cnp, String universityName);
 }

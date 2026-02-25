@@ -48,7 +48,7 @@ public class UniversityController {
             @NotBlank(message = "Location cannot be blank")
             String location,
 
-            List<Student> students
+            List<University.StudentInner> students
     ) {}
 
 }

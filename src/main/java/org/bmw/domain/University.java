@@ -12,9 +12,9 @@ public class University {
     private Long id;
     private String name;
     private String location;
-    private List<Student> students;
+    private List<StudentInner> students;
 
-    public static University reconstitute(Long id, String name, String location, List<Student> students) {
+    public static University reconstitute(Long id, String name, String location, List<StudentInner> students) {
         return University.builder()
                 .id(id)
                 .name(name)
@@ -23,7 +23,7 @@ public class University {
                 .build();
     }
 
-    public static University createUniversity(String name, String location, List<Student> students){
+    public static University createUniversity(String name, String location, List<StudentInner> students){
         University university = University.builder()
                 .name(name)
                 .location(location)
@@ -38,4 +38,18 @@ public class University {
             throw new IllegalStateException("University must have a name and a location !");
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public  static class StudentInner{
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String cnp;
+        private String email;
+    }
 }
+
+

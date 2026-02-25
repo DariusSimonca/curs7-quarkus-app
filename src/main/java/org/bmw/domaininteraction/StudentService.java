@@ -16,7 +16,7 @@ public class StudentService {
     }
 
 
-    public Long createStudent(String firstName, String lastName, String cnp, String email, University university) {
+    public Long createStudent(String firstName, String lastName, String cnp, String email, Student.UniversityInner university) {
         Student student = Student.createStudent(firstName, lastName, cnp, email, university);
         Student created = students.create(student);
         return created.getId();
@@ -32,5 +32,9 @@ public class StudentService {
 
     public void deleteStudent(String cnp){
         students.deleteStudent(cnp);
+    }
+
+    public void assignStudentToUniversity(String cnp, String universityName){
+        students.assignStudentToUniversity(cnp,universityName);
     }
 }

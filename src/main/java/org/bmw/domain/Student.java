@@ -12,10 +12,10 @@ public class Student {
     private String lastName;
     private String cnp;
     private String email;
-    private University university;
+    private UniversityInner university;
 
     public static Student reconstitute(Long id, String firstName, String lastName, String cnp,
-                                       String email, University university) {
+                                       String email, UniversityInner university) {
         return Student.builder()
                 .id(id)
                 .firstName(firstName)
@@ -26,7 +26,7 @@ public class Student {
                 .build();
     }
 
-    public static Student createStudent(String firstName, String lastName, String cnp, String email, University university) {
+    public static Student createStudent(String firstName, String lastName, String cnp, String email, UniversityInner university) {
         Student student = Student.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -43,4 +43,17 @@ public class Student {
             throw new IllegalStateException("Student must have a firstname,lastname,cnp and email !");
         }
     }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+
+    public static class UniversityInner{
+        private Long id;
+        private String name;
+        private String location;
+    }
 }
+
+
