@@ -28,4 +28,12 @@ public class UniversityService {
         return universities.findByName(name);
     }
 
+    public void updateUniversity(String name, String location, String newName){
+        universities.updateUniversity(name,location,newName);
+    }
+
+    public void deleteUniversity(String name){
+        universities.deleteUniversity(name);
+    }
+
 }

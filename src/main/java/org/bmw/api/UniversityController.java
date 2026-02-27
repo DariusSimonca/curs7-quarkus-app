@@ -41,6 +41,21 @@ public class UniversityController {
         return universityService.findByName(name);
     }
 
+    @Path("/update")
+    @PUT
+    public Response updateUniversity(@Valid UpdateUniversityRequest request){
+        universityService.updateUniversity(request.name(), request.location(), request.newName());
+        return Response.noContent().build();
+    }
+
+    @Path("/delete")
+    @DELETE
+    public Response deleteUniversity(@QueryParam("universityName") String universityName){
+        universityService.deleteUniversity(universityName);
+        return Response.noContent().build();
+    }
+
+
     public record CreateUniversityRequest(
             @NotBlank(message = "Name cannot be blank")
             String name,
@@ -50,5 +65,15 @@ public class UniversityController {
 
             List<University.StudentInner> students
     ) {}
+
+    public record UpdateUniversityRequest(
+
+            @NotBlank(message = "Name cannot be blank!")
+            String name,
+
+            String location,
+
+            String newName
+    ){}
 
 }
