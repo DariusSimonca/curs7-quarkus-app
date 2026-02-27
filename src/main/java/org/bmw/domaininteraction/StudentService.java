@@ -37,4 +37,12 @@ public class StudentService {
     public void assignStudentToUniversity(String cnp, String universityName){
         students.assignStudentToUniversity(cnp,universityName);
     }
+
+    public void unassignStudentFromUniversity(String cnp, String universityName){
+        students.unassignStudentFromUniversity(cnp,universityName);
+    }
+
+    public void updateStudent(String firstName, String lastName, String cnp, String email){
+        students.updateStudent(firstName,lastName,cnp,email);
+    }
 }

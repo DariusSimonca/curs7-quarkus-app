@@ -56,12 +56,12 @@ public class StudentRepository implements PanacheRepository<StudentEntity>, Stud
             throw new NotFoundException("Student not found !");
         }
 
-        UniversityEntity universityEntity = universityRepository.findById(entity.getUniversity().getId());
-        if (universityEntity != null){
-            universityEntity.deleteStudent(entity);
-        }
 
-        entity.setUniversity(null);
+        if (entity.getUniversity() != null){
+            UniversityEntity universityEntity = universityRepository.findById(entity.getUniversity().getId());
+            universityEntity.deleteStudent(entity);
+            entity.setUniversity(null);
+        }
 
         delete(entity);
     }
@@ -82,5 +82,44 @@ public class StudentRepository implements PanacheRepository<StudentEntity>, Stud
 
         entity.setUniversity(universityEntity);
         universityEntity.addStudent(entity);
+    }
+
+    @Override
+    public void unassignStudentFromUniversity(String cnp, String universityName) {
+        StudentEntity entity = find("cnp", cnp).firstResult();
+
+        if (entity == null) {
+            throw new NotFoundException("Student not found !");
+        }
+
+        UniversityEntity universityEntity = universityRepository.find("name", universityName).firstResult();
+
+        if (universityEntity == null) {
+            throw new NotFoundException("University not found !");
+        }
+
+        entity.setUniversity(null);
+        universityEntity.deleteStudent(entity);
+    }
+
+    @Override
+    public void updateStudent(String firstName, String lastName, String cnp, String email) {
+        StudentEntity entity = find("cnp", cnp).firstResult();
+
+        if (entity == null) {
+            throw new NotFoundException("Student not found !");
+        }
+
+        if(!entity.getFirstName().equals(firstName) && !firstName.isBlank()){
+            entity.setFirstName(firstName);
+        }
+
+        if(!entity.getLastName().equals(lastName) && !lastName.isBlank()){
+            entity.setLastName(lastName);
+        }
+
+        if(!entity.getEmail().equals(email) && !email.isBlank()){
+            entity.setEmail(email);
+        }
     }
 }

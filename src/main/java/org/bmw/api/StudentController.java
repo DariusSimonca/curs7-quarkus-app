@@ -57,6 +57,20 @@ public class StudentController {
         return Response.noContent().build();
     }
 
+    @Path("/unassignToUniversity")
+    @PUT
+    public Response unassignStudentToUniversity(@Valid UnassignStudentFromUniversityRequest request){
+        studentService.unassignStudentFromUniversity(request.cnp(), request.universityName());
+        return Response.noContent().build();
+    }
+
+    @Path("/update")
+    @PUT
+    public Response updateStudent(@Valid UpdateStudentRequest request){
+        studentService.updateStudent(request.firstName(), request.lastName(), request.cnp(), request.email());
+        return Response.noContent().build();
+    }
+
     public record CreateStudentRequest(
             @NotBlank(message = "FirstName cannot be blank")
             String firstName,
@@ -83,6 +97,25 @@ public class StudentController {
       String universityName
     ){}
 
+    public record UnassignStudentFromUniversityRequest(
 
+            @NotBlank(message = "CNP cannot be blank!")
+            String cnp,
+
+            @NotBlank(message = "University name cannot be blank!")
+            String universityName
+    ){}
+
+    public record UpdateStudentRequest(
+
+            String firstName,
+
+            String lastName,
+
+            @NotBlank(message = "CNP cannot be blank!")
+            String cnp,
+
+            String email
+    ){}
 
 }

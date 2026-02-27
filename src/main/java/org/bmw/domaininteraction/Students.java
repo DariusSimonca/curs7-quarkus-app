@@ -10,4 +10,6 @@ public interface Students {
     List<Student> findAllStudents();
     void deleteStudent(String cnp);
     void assignStudentToUniversity(String cnp, String universityName);
+    void unassignStudentFromUniversity(String cnp, String universityName);
+    void updateStudent(String firstName, String lastName, String cnp, String email);
 }
